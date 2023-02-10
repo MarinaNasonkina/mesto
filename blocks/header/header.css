@@ -1,0 +1,23 @@
+.header {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+
+.header::after {
+  content: '';
+  display: block;
+  padding-bottom: 41px;
+  border-bottom: 1px solid var(--fade);
+  opacity: .7;
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    padding-top: 28px;
+    padding-bottom: 42px;
+  }
+
+  .header::after {
+    padding-bottom: 32px;
+  }
+}
