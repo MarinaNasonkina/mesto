@@ -1,0 +1,7 @@
+.card {
+  background-color: var(--light);
+  border-radius: 10px;
+  width: 282px;
+  display: flex;
+  flex-direction: column;
+}
