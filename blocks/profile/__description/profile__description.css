@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: baseline;
   row-gap: 9px;
+  column-gap: 19px;
 }
 
 @media screen and (max-width: 703px) {

@@ -1,7 +1,7 @@
 .profile__about {
   margin: 0;
   padding: 0;
-  max-width: 100%;
+  width: 100%;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -12,8 +12,15 @@
   overflow: hidden;
 }
 
+@media screen and (max-width: 703px) {
+  .profile__about {
+    text-align: center;
+  }
+}
+
 @media screen and (max-width: 618px) {
   .profile__about {
+    max-width: 282px;
     font-size: 14px;
     line-height: 17px;
   }
