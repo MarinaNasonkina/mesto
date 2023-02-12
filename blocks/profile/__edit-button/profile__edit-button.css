@@ -1,5 +1,6 @@
 .profile__edit-button {
-  background: var(--dark) url('../../../images/buttons/edit.svg') center no-repeat;
+  background: var(--dark) url('../../../images/buttons/edit.svg') center
+    no-repeat;
   border: 1px solid var(--light);
   width: 24px;
   height: 24px;
