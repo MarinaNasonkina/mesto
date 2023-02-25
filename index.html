@@ -31,7 +31,7 @@
         </div>
         <button
           class="profile__add-button"
-          aria-label="Добавить фотографию."
+          aria-label="Добавить место."
           type="button"
         ></button>
       </section>
@@ -40,7 +40,7 @@
     <footer class="footer">
       <p class="footer__text">© 2023 Mesto Russia</p>
     </footer>
-    <section class="popup">
+    <section class="popup popup_type_edit-profile">
       <div class="popup__container">
         <button
           class="popup__close-button"
@@ -48,7 +48,11 @@
           type="button"
         ></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form method="post" name="edit-profile" class="popup__form">
+        <form
+          method="post"
+          name="edit-profile"
+          class="popup__form popup__form_type_edit-profile"
+        >
           <input
             class="popup__field popup__field_type_name"
             placeholder="Введите имя профиля"
@@ -60,6 +64,33 @@
             name="profile-about"
           >
           <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+      </div>
+    </section>
+    <section class="popup popup_type_add-place">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          aria-label="Отменить изменения."
+          type="button"
+        ></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form
+          method="post"
+          name="add-place"
+          class="popup__form popup__form_type_add-place"
+        >
+          <input
+            class="popup__field popup__field_type_place-name"
+            placeholder="Название"
+            name="place-name"
+          >
+          <input
+            class="popup__field popup__field_type_place-img"
+            placeholder="Ссылка на картинку"
+            name="place-img"
+          >
+          <button type="submit" class="popup__submit">Создать</button>
         </form>
       </div>
     </section>
