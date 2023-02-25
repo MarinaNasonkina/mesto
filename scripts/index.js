@@ -1,11 +1,47 @@
-let editButton = document.querySelector('.profile__edit-button');
-let profileName = document.querySelector('.profile__name');
-let profileAbout = document.querySelector('.profile__about');
-let popup = document.querySelector('.popup');
-let editForm = popup.querySelector('.popup__form');
-let closeButton = popup.querySelector('.popup__close-button');
-let inputName = popup.querySelector('.popup__field_type_name');
-let inputAbout = popup.querySelector('.popup__field_type_about');
+const editButton = document.querySelector('.profile__edit-button');
+const profileName = document.querySelector('.profile__name');
+const profileAbout = document.querySelector('.profile__about');
+const sectionCards = document.querySelector('.cards');
+const initialCards = [
+  {
+    name: 'Балтийская коса',
+    link: './images/cards/baltiyskay-kosa.jpg',
+  },
+  {
+    name: 'Куршская коса',
+    link: './images/cards/kurshskay-kosa.jpg',
+  },
+  {
+    name: 'Петропавловск-Камчатский',
+    link: './images/cards/petropavlovsk-kamchatsky.jpg',
+  },
+  {
+    name: 'Халактырский пляж',
+    link: './images/cards/halaktyrsky.jpg',
+  },
+  {
+    name: 'Териберка',
+    link: './images/cards/teriberka.jpg',
+  },
+  {
+    name: 'Рыбачий',
+    link: './images/cards/rybachy.jpg',
+  },
+];
+const cardTemplate = document.querySelector('.card-template').content;
+const popup = document.querySelector('.popup');
+const editForm = popup.querySelector('.popup__form');
+const closeButton = popup.querySelector('.popup__close-button');
+const inputName = popup.querySelector('.popup__field_type_name');
+const inputAbout = popup.querySelector('.popup__field_type_about');
+
+initialCards.forEach(element => {
+  const cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector('.card__title').textContent = element.name;
+  cardElement.querySelector('.card__image').src = element.link;
+  cardElement.querySelector('.card__image').alt = element.name;
+  sectionCards.append(cardElement);
+});
 
 function openPopup() {
   inputName.value = profileName.textContent;
