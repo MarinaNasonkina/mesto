@@ -51,9 +51,13 @@ places.forEach(element => makePlace(element));
 
 function makePlace(place) {
   const cardElement = cardTemplate.cloneNode(true);
+  const cardLike = cardElement.querySelector('.card__like');
   cardElement.querySelector('.card__title').textContent = place.name;
   cardElement.querySelector('.card__image').src = place.link;
   cardElement.querySelector('.card__image').alt = place.name;
+  cardLike.addEventListener('click', evt => {
+    evt.target.classList.toggle('card__like_active');
+  });
   sectionCards.prepend(cardElement);
 }
 
