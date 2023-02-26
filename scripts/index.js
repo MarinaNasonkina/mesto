@@ -15,43 +15,47 @@ const inputAbout = document.querySelector('.popup__field_type_about');
 
 const popupAddPlace = document.querySelector('.popup_type_add-place');
 const addPlaceForm = document.querySelector('.popup__form_type_add-place');
+const inputPlaceName = document.querySelector('.popup__field_type_place-name');
+const inputPlaceImg = document.querySelector('.popup__field_type_place-img');
 
 const closeButtons = document.querySelectorAll('.popup__close-button');
 
-const initialCards = [
+const places = [
   {
-    name: 'Балтийская коса',
-    link: './images/cards/baltiyskay-kosa.jpg',
-  },
-  {
-    name: 'Куршская коса',
-    link: './images/cards/kurshskay-kosa.jpg',
-  },
-  {
-    name: 'Петропавловск-Камчатский',
-    link: './images/cards/petropavlovsk-kamchatsky.jpg',
-  },
-  {
-    name: 'Халактырский пляж',
-    link: './images/cards/halaktyrsky.jpg',
+    name: 'Рыбачий',
+    link: './images/cards/rybachy.jpg',
   },
   {
     name: 'Териберка',
     link: './images/cards/teriberka.jpg',
   },
   {
-    name: 'Рыбачий',
-    link: './images/cards/rybachy.jpg',
+    name: 'Халактырский пляж',
+    link: './images/cards/halaktyrsky.jpg',
+  },
+  {
+    name: 'Петропавловск-Камчатский',
+    link: './images/cards/petropavlovsk-kamchatsky.jpg',
+  },
+  {
+    name: 'Куршская коса',
+    link: './images/cards/kurshskay-kosa.jpg',
+  },
+  {
+    name: 'Балтийская коса',
+    link: './images/cards/baltiyskay-kosa.jpg',
   },
 ];
 
-initialCards.forEach(element => {
+places.forEach(element => makePlace(element));
+
+function makePlace(place) {
   const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector('.card__title').textContent = element.name;
-  cardElement.querySelector('.card__image').src = element.link;
-  cardElement.querySelector('.card__image').alt = element.name;
-  sectionCards.append(cardElement);
-});
+  cardElement.querySelector('.card__title').textContent = place.name;
+  cardElement.querySelector('.card__image').src = place.link;
+  cardElement.querySelector('.card__image').alt = place.name;
+  sectionCards.prepend(cardElement);
+}
 
 function openPopup(popupType) {
   popupType.classList.add('popup_opened');
@@ -75,11 +79,29 @@ function editFormSubmit(evt) {
   closePopup(evt);
 }
 
+function openAddPlacePopup() {
+  inputPlaceName.value = '';
+  inputPlaceImg.value = '';
+  openPopup(popupAddPlace);
+}
+
+function addPlaceFormSubmit(evt) {
+  evt.preventDefault();
+  const newPlace = {
+    name: inputPlaceName.value,
+    link: inputPlaceImg.value,
+  }
+  places.push(newPlace);
+  makePlace(newPlace);
+  closePopup(evt);
+}
+
 editButton.addEventListener('click', openEditProfilePopup);
-addButton.addEventListener('click', () => openPopup(popupAddPlace));
+addButton.addEventListener('click', openAddPlacePopup);
 
 closeButtons.forEach(button => {
   button.addEventListener('click', evt => closePopup(evt));
 });
 
 editForm.addEventListener('submit', editFormSubmit);
+addPlaceForm.addEventListener('submit', addPlaceFormSubmit);
