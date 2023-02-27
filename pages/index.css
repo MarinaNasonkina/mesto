@@ -46,9 +46,11 @@
 
 @import url('../blocks/card/__title/card__title.css');
 
-@import url('../blocks/card/__like/card__like.css');
+@import url('../blocks/card/__like-button/card__like-button.css');
 
-@import url('../blocks/card/__like/_active/card__like_active.css');
+@import url('../blocks/card/__like-button/_active/card__like-button_active.css');
+
+@import url('../blocks/card/__remove-button/card__remove-button.css');
 
 /* Footer */
 
@@ -72,4 +74,4 @@
 
 @import url('../blocks/popup/__field/popup__field.css');
 
-@import url('../blocks/popup/__submit/popup__submit.css');
+@import url('../blocks/popup/__submit-button/popup__submit-button.css');

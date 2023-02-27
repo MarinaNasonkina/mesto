@@ -20,7 +20,7 @@ const inputPlaceImg = document.querySelector('.popup__field_type_place-img');
 
 const closeButtons = document.querySelectorAll('.popup__close-button');
 
-const places = [
+const initialCards = [
   {
     name: 'Рыбачий',
     link: './images/cards/rybachy.jpg',
@@ -47,16 +47,20 @@ const places = [
   },
 ];
 
-places.forEach(element => makePlace(element));
+initialCards.forEach(element => makePlace(element));
 
 function makePlace(place) {
   const cardElement = cardTemplate.cloneNode(true);
-  const cardLike = cardElement.querySelector('.card__like');
+  const cardLikeButton = cardElement.querySelector('.card__like-button');
+  const cardRemoveButton = cardElement.querySelector('.card__remove-button');
   cardElement.querySelector('.card__title').textContent = place.name;
   cardElement.querySelector('.card__image').src = place.link;
   cardElement.querySelector('.card__image').alt = place.name;
-  cardLike.addEventListener('click', evt => {
-    evt.target.classList.toggle('card__like_active');
+  cardLikeButton.addEventListener('click', evt => {
+    evt.target.classList.toggle('card__like-button_active');
+  });
+  cardRemoveButton.addEventListener('click', evt => {
+    evt.target.closest('.card').remove();
   });
   sectionCards.prepend(cardElement);
 }
@@ -94,8 +98,7 @@ function addPlaceFormSubmit(evt) {
   const newPlace = {
     name: inputPlaceName.value,
     link: inputPlaceImg.value,
-  }
-  places.push(newPlace);
+  };
   makePlace(newPlace);
   closePopup(evt);
 }
