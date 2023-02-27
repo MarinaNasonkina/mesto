@@ -41,7 +41,7 @@
       <p class="footer__text">© 2023 Mesto Russia</p>
     </footer>
     <section class="popup popup_type_edit-profile">
-      <div class="popup__container">
+      <div class="popup__container popup__container_for_form">
         <button
           class="popup__close-button"
           aria-label="Отменить изменения."
@@ -68,7 +68,7 @@
       </div>
     </section>
     <section class="popup popup_type_add-place">
-      <div class="popup__container">
+      <div class="popup__container popup__container_for_form">
         <button
           class="popup__close-button"
           aria-label="Отменить изменения."
@@ -94,9 +94,25 @@
         </form>
       </div>
     </section>
+    <section
+      class="popup popup_type_full-screen-place"
+      aria-label="Место на весь экран."
+    >
+      <div class="popup__container popup__container_for_place">
+        <button
+          class="popup__close-button"
+          aria-label="Закрыть."
+          type="button"
+        ></button>
+        <img src="#" alt="" class="popup__image">
+        <p class="popup__subtitle"></p>
+      </div>
+    </section>
     <template class="card-template">
       <article class="card">
-        <img src="" alt="" class="card__image">
+        <div class="card__image-wrap">
+          <img src="" alt="" class="card__image">
+        </div>
         <div class="card__info">
           <h2 class="card__title"></h2>
           <button

@@ -4,5 +4,12 @@
   display: block;
   object-position: center;
   object-fit: cover;
-  border-radius: 10px 10px 0px 0px;
+  cursor: pointer;
+  transition: transform .5s;
+}
+
+@media (any-hover: hover) {
+  .card__image:hover {
+    transform: scale(1.05);
+  }
 }
