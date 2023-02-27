@@ -70,13 +70,6 @@ function makePlace(place) {
   sectionCards.prepend(cardElement);
 }
 
-function openFullScreenPopup(evt) {
-  popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.alt;
-  popupSubtitle.textContent = evt.target.alt;
-  openPopup(popupFullScreen);
-}
-
 function openPopup(popupType) {
   popupType.classList.add('popup_opened');
 }
@@ -113,6 +106,13 @@ function addPlaceFormSubmit(evt) {
   };
   makePlace(newPlace);
   closePopup(evt);
+}
+
+function openFullScreenPopup(evt) {
+  popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.alt;
+  popupSubtitle.textContent = evt.target.alt;
+  openPopup(popupFullScreen);
 }
 
 editButton.addEventListener('click', openEditProfilePopup);
