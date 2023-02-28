@@ -1,82 +1,58 @@
-const editButton = document.querySelector('.profile__edit-button');
+const buttonEditProfile = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
-const addButton = document.querySelector('.profile__add-button');
+const buttonAddPlace = document.querySelector('.profile__add-button');
 const sectionCards = document.querySelector('.cards');
 const cardTemplate = document.querySelector('.card-template').content;
 
-const popups = document.querySelectorAll('.popup');
-const closeButtons = document.querySelectorAll('.popup__close-button');
-
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const editForm = document.querySelector('.popup__form_type_edit-profile');
+const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close-button');
+const formEditProfile = document.querySelector('.popup__form_type_edit-profile');
 const inputName = document.querySelector('.popup__field_type_name');
 const inputAbout = document.querySelector('.popup__field_type_about');
 
 const popupAddPlace = document.querySelector('.popup_type_add-place');
-const addPlaceForm = document.querySelector('.popup__form_type_add-place');
+const buttonCloseAddPlace = popupAddPlace.querySelector('.popup__close-button');
+const formAddPlace = document.querySelector('.popup__form_type_add-place');
 const inputPlaceName = document.querySelector('.popup__field_type_place-name');
 const inputPlaceImg = document.querySelector('.popup__field_type_place-img');
 
 const popupFullScreen = document.querySelector('.popup_type_full-screen-place');
+const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__close-button');
 const popupImage = document.querySelector('.popup__image');
 const popupSubtitle = document.querySelector('.popup__subtitle');
 
-const initialCards = [
-  {
-    name: 'Рыбачий',
-    link: './images/cards/rybachy.jpg',
-  },
-  {
-    name: 'Териберка',
-    link: './images/cards/teriberka.jpg',
-  },
-  {
-    name: 'Халактырский пляж',
-    link: './images/cards/halaktyrsky.jpg',
-  },
-  {
-    name: 'Петропавловск-Камчатский',
-    link: './images/cards/petropavlovsk-kamchatsky.jpg',
-  },
-  {
-    name: 'Куршская коса',
-    link: './images/cards/kurshskay-kosa.jpg',
-  },
-  {
-    name: 'Балтийская коса',
-    link: './images/cards/baltiyskay-kosa.jpg',
-  },
-];
+initialCards.forEach(object => renderCard(object));
 
-initialCards.forEach(element => makePlace(element));
+function renderCard(object) {
+  sectionCards.prepend(makeCard(object));
+}
 
-function makePlace(place) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  const cardLikeButton = cardElement.querySelector('.card__like-button');
-  const cardRemoveButton = cardElement.querySelector('.card__remove-button');
-  cardElement.querySelector('.card__title').textContent = place.name;
-  cardImage.src = place.link;
-  cardImage.alt = place.name;
+function makeCard(object) {
+  const card = cardTemplate.cloneNode(true);
+  const cardImage = card.querySelector('.card__image');
+  const buttonLikeCard = card.querySelector('.card__like-button');
+  const buttonRemoveCard = card.querySelector('.card__remove-button');
+  card.querySelector('.card__title').textContent = object.name;
+  cardImage.src = object.link;
+  cardImage.alt = object.name;
   cardImage.addEventListener('click', evt => openFullScreenPopup(evt));
-  cardLikeButton.addEventListener('click', evt => {
+  buttonLikeCard.addEventListener('click', evt => {
     evt.target.classList.toggle('card__like-button_active');
   });
-  cardRemoveButton.addEventListener('click', evt => {
+  buttonRemoveCard.addEventListener('click', evt => {
     evt.target.closest('.card').remove();
   });
-  sectionCards.prepend(cardElement);
+  return card;
 }
 
 function openPopup(popupType) {
   popupType.classList.add('popup_opened');
 }
 
-function closePopup(evt) {
-  const popup = evt.target.closest('.popup');
-  popup.classList.remove('popup_opened');
+function closePopup(popupType) {
+  popupType.classList.remove('popup_opened');
 }
 
 function openEditProfilePopup() {
@@ -85,27 +61,25 @@ function openEditProfilePopup() {
   openPopup(popupEditProfile);
 }
 
-function editFormSubmit(evt) {
+function submitEditForm(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileAbout.textContent = inputAbout.value;
-  closePopup(evt);
+  closePopup(popupEditProfile);
 }
 
 function openAddPlacePopup() {
-  inputPlaceName.value = '';
-  inputPlaceImg.value = '';
+  formAddPlace.reset();
   openPopup(popupAddPlace);
 }
 
-function addPlaceFormSubmit(evt) {
+function submitAddPlaceForm(evt) {
   evt.preventDefault();
-  const newPlace = {
+  renderCard({
     name: inputPlaceName.value,
     link: inputPlaceImg.value,
-  };
-  makePlace(newPlace);
-  closePopup(evt);
+  });
+  closePopup(popupAddPlace);
 }
 
 function openFullScreenPopup(evt) {
@@ -115,12 +89,12 @@ function openFullScreenPopup(evt) {
   openPopup(popupFullScreen);
 }
 
-editButton.addEventListener('click', openEditProfilePopup);
-addButton.addEventListener('click', openAddPlacePopup);
+buttonEditProfile.addEventListener('click', openEditProfilePopup);
+buttonAddPlace.addEventListener('click', openAddPlacePopup);
 
-closeButtons.forEach(button => {
-  button.addEventListener('click', evt => closePopup(evt));
-});
+buttonCloseEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
+buttonCloseAddPlace.addEventListener('click', () => closePopup(popupAddPlace));
+buttonCloseFullScreen.addEventListener('click', () => closePopup(popupFullScreen));
 
-editForm.addEventListener('submit', editFormSubmit);
-addPlaceForm.addEventListener('submit', addPlaceFormSubmit);
+formEditProfile.addEventListener('submit', submitEditForm);
+formAddPlace.addEventListener('submit', submitAddPlaceForm);
