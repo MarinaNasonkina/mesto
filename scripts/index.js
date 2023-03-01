@@ -23,20 +23,20 @@ const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__close-butto
 const popupImage = document.querySelector('.popup__image');
 const popupSubtitle = document.querySelector('.popup__subtitle');
 
-initialCards.forEach(object => renderCard(object));
+initialCards.forEach(card => renderCard(card));
 
-function renderCard(object) {
-  sectionCards.prepend(makeCard(object));
+function renderCard(card) {
+  sectionCards.prepend(makeCard(card));
 }
 
-function makeCard(object) {
+function makeCard({name, link}) {
   const card = cardTemplate.cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const buttonLikeCard = card.querySelector('.card__like-button');
   const buttonRemoveCard = card.querySelector('.card__remove-button');
-  card.querySelector('.card__title').textContent = object.name;
-  cardImage.src = object.link;
-  cardImage.alt = object.name;
+  card.querySelector('.card__title').textContent = name;
+  cardImage.src = link;
+  cardImage.alt = name;
   cardImage.addEventListener('click', evt => openFullScreenPopup(evt));
   buttonLikeCard.addEventListener('click', evt => {
     evt.target.classList.toggle('card__like-button_active');
