@@ -49,10 +49,14 @@ function makeCard({name, link}) {
 
 function openPopup(popupType) {
   popupType.classList.add('popup_opened');
+  popupType.addEventListener('mousedown', closeByOverlay);
+  document.addEventListener('keydown', closeByEsc);
 }
 
 function closePopup(popupType) {
   popupType.classList.remove('popup_opened');
+  popupType.removeEventListener('mousedown', closeByOverlay);
+  document.removeEventListener('keydown', closeByEsc);
 }
 
 function openEditProfilePopup() {
@@ -89,6 +93,19 @@ function openFullScreenPopup(evt) {
   popupImage.alt = evt.target.alt;
   popupSubtitle.textContent = evt.target.alt;
   openPopup(popupFullScreen);
+}
+
+function closeByOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.currentTarget);
+  }
+}
+
+function closeByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
