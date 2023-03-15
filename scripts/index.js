@@ -62,7 +62,7 @@ function closePopup(popupType) {
 function openEditProfilePopup() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
-  resetForm(formEditProfile);
+  resetForm(formEditProfile, config);
   openPopup(popupEditProfile);
 }
 
@@ -75,7 +75,7 @@ function submitEditForm(evt) {
 
 function openAddPlacePopup() {
   formAddPlace.reset();
-  resetForm(formAddPlace);
+  resetForm(formAddPlace, config);
   openPopup(popupAddPlace);
 }
 

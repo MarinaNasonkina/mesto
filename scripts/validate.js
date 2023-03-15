@@ -5,23 +5,23 @@ const config = {
   inputErrorClass: 'popup__field_invalid',
 };
 
-function showFieldError(form, field, errorMessage) {
+function showFieldError(form, field, { inputErrorClass }, errorMessage) {
   const formError = form.querySelector(`.${field.id}-error`);
-  field.classList.add(config.inputErrorClass);
+  field.classList.add(inputErrorClass);
   formError.textContent = errorMessage;
 }
 
-function hideFieldError(form, field) {
+function hideFieldError(form, field, { inputErrorClass }) {
   const formError = form.querySelector(`.${field.id}-error`);
-  field.classList.remove(config.inputErrorClass);
+  field.classList.remove(inputErrorClass);
   formError.textContent = '';
 }
 
-function checkFieldValidity(form, field) {
+function checkFieldValidity(form, field, config) {
   if (field.validity.valid) {
-    hideFieldError(form, field);
+    hideFieldError(form, field, config);
   } else {
-    showFieldError(form, field, field.validationMessage);
+    showFieldError(form, field, config, field.validationMessage);
   }
 }
 
@@ -39,23 +39,23 @@ function toggleButtonState(fieldsList, button) {
   }
 }
 
-function resetForm(form) {
+function resetForm(form, config) {
   const fieldsList = Array.from(form.querySelectorAll(config.inputSelector));
   const button = form.querySelector(config.submitButtonSelector);
 
   fieldsList.forEach(field => {
-    hideFieldError(form, field);
+    hideFieldError(form, field, config);
   });
   toggleButtonState(fieldsList, button);
 }
 
-function setEventListeners(form) {
+function setEventListeners(form, config) {
   const fieldsList = Array.from(form.querySelectorAll(config.inputSelector));
   const button = form.querySelector(config.submitButtonSelector);
 
   fieldsList.forEach(field => {
     field.addEventListener('input', () => {
-      checkFieldValidity(form, field);
+      checkFieldValidity(form, field, config);
       toggleButtonState(fieldsList, button);
     });
   });
@@ -65,7 +65,7 @@ function enableValidation(config) {
   const formsList = Array.from(document.querySelectorAll(config.formSelector));
 
   formsList.forEach(form => {
-    setEventListeners(form);
+    setEventListeners(form, config);
   });
 }
 
