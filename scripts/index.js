@@ -29,7 +29,7 @@ function renderCard(card) {
   sectionCards.prepend(makeCard(card));
 }
 
-function makeCard({name, link}) {
+function makeCard({ name, link }) {
   const card = cardTemplate.cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const buttonLikeCard = card.querySelector('.card__like-button');

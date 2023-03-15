@@ -28,7 +28,7 @@ function checkFieldValidity(form, field) {
 function hasInvalidField(fieldsList) {
   return fieldsList.some(field => {
     return !field.validity.valid;
-  })
+  });
 }
 
 function toggleButtonState(fieldsList, button) {
