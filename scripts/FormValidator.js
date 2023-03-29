@@ -13,7 +13,9 @@ class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
 
     this._form = formType;
-    this._fieldsList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._fieldsList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
     this._buttonSubmit = this._form.querySelector(this._submitButtonSelector);
   }
 

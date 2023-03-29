@@ -36,9 +36,9 @@ class Card {
 
   _getTemplate() {
     const card = document
-    .querySelector(this._templateSelector)
-    .content.querySelector('.card')
-    .cloneNode(true);
+      .querySelector(this._templateSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
 
     return card;
   }
