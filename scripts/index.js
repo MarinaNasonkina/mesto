@@ -1,10 +1,11 @@
+import { initialCards, Card } from './Card.js';
+
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
 const buttonAddPlace = document.querySelector('.profile__add-button');
 const sectionCards = document.querySelector('.cards');
-const cardTemplate = document.querySelector('.card-template').content;
 
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close-button');
@@ -23,28 +24,11 @@ const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__close-butto
 const popupImage = document.querySelector('.popup__image');
 const popupSubtitle = document.querySelector('.popup__subtitle');
 
-initialCards.forEach(card => renderCard(card));
+initialCards.forEach(cardData => renderCard(cardData));
 
-function renderCard(card) {
-  sectionCards.prepend(makeCard(card));
-}
-
-function makeCard({ name, link }) {
-  const card = cardTemplate.cloneNode(true);
-  const cardImage = card.querySelector('.card__image');
-  const buttonLikeCard = card.querySelector('.card__like-button');
-  const buttonRemoveCard = card.querySelector('.card__remove-button');
-  card.querySelector('.card__title').textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardImage.addEventListener('click', evt => openFullScreenPopup(evt));
-  buttonLikeCard.addEventListener('click', evt => {
-    evt.target.classList.toggle('card__like-button_active');
-  });
-  buttonRemoveCard.addEventListener('click', evt => {
-    evt.target.closest('.card').remove();
-  });
-  return card;
+function renderCard(cardData) {
+  const card = new Card(cardData, '.card-template');
+  sectionCards.prepend(card.generateCard());
 }
 
 function openPopup(popupType) {
@@ -88,7 +72,7 @@ function submitAddPlaceForm(evt) {
   closePopup(popupAddPlace);
 }
 
-function openFullScreenPopup(evt) {
+export function openFullScreenPopup(evt) {
   popupImage.src = evt.target.src;
   popupImage.alt = evt.target.alt;
   popupSubtitle.textContent = evt.target.alt;
