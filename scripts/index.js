@@ -1,4 +1,5 @@
 import { initialCards, Card } from './Card.js';
+import { config, FormValidator } from './FormValidator.js';
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
@@ -24,6 +25,12 @@ const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__close-butto
 const popupImage = document.querySelector('.popup__image');
 const popupSubtitle = document.querySelector('.popup__subtitle');
 
+const validatorEditProfile = new FormValidator(config, formEditProfile);
+const validatorAddPlace = new FormValidator(config, formAddPlace);
+
+validatorEditProfile.enableValidation();
+validatorAddPlace.enableValidation();
+
 initialCards.forEach(cardData => renderCard(cardData));
 
 function renderCard(cardData) {
@@ -46,7 +53,7 @@ function closePopup(popupType) {
 function openEditProfilePopup() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
-  resetForm(formEditProfile, config);
+  validatorEditProfile.resetForm();
   openPopup(popupEditProfile);
 }
 
@@ -59,7 +66,7 @@ function submitEditForm(evt) {
 
 function openAddPlacePopup() {
   formAddPlace.reset();
-  resetForm(formAddPlace, config);
+  validatorAddPlace.resetForm();
   openPopup(popupAddPlace);
 }
 
