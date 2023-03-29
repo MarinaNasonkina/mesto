@@ -1,4 +1,5 @@
-import { initialCards, Card } from './Card.js';
+import Card from './Card.js';
+import { initialCards } from './constants.js';
 import { config, FormValidator } from './FormValidator.js';
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
@@ -34,7 +35,7 @@ validatorAddPlace.enableValidation();
 initialCards.forEach(cardData => renderCard(cardData));
 
 function renderCard(cardData) {
-  const card = new Card(cardData, '.card-template');
+  const card = new Card(cardData, '.card-template', openFullScreenPopup);
   sectionCards.prepend(card.generateCard());
 }
 
@@ -79,7 +80,7 @@ function submitAddPlaceForm(evt) {
   closePopup(popupAddPlace);
 }
 
-export function openFullScreenPopup(evt) {
+function openFullScreenPopup(evt) {
   popupImage.src = evt.target.src;
   popupImage.alt = evt.target.alt;
   popupSubtitle.textContent = evt.target.alt;

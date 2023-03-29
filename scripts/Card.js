@@ -1,37 +1,9 @@
-import { openFullScreenPopup } from './index.js';
-
-const initialCards = [
-  {
-    name: 'Рыбачий',
-    link: './images/cards/rybachy.jpg',
-  },
-  {
-    name: 'Териберка',
-    link: './images/cards/teriberka.jpg',
-  },
-  {
-    name: 'Халактырский пляж',
-    link: './images/cards/halaktyrsky.jpg',
-  },
-  {
-    name: 'Петропавловск-Камчатский',
-    link: './images/cards/petropavlovsk-kamchatsky.jpg',
-  },
-  {
-    name: 'Куршская коса',
-    link: './images/cards/kurshskay-kosa.jpg',
-  },
-  {
-    name: 'Балтийская коса',
-    link: './images/cards/baltiyskay-kosa.jpg',
-  },
-];
-
-class Card {
-  constructor(data, templateSelector) {
+export default class Card {
+  constructor(data, templateSelector, openInFull) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._openInFull = openInFull;
   }
 
   _getTemplate() {
@@ -43,18 +15,18 @@ class Card {
     return card;
   }
 
-  _handleLikeCard(evt) {
+  _likeCard(evt) {
     evt.target.classList.toggle('card__like-button_active');
   }
 
-  _handleRemoveCard(evt) {
+  _removeCard(evt) {
     evt.target.closest('.card').remove();
   }
 
   _setEventListeners() {
-    this._buttonLikeCard.addEventListener('click', evt => this._handleLikeCard(evt));
-    this._buttonRemoveCard.addEventListener('click', evt => this._handleRemoveCard(evt));
-    this._cardImage.addEventListener('click', evt => openFullScreenPopup(evt));
+    this._buttonLikeCard.addEventListener('click', this._likeCard);
+    this._buttonRemoveCard.addEventListener('click', this._removeCard);
+    this._cardImage.addEventListener('click', this._openInFull);
   }
 
   generateCard() {
@@ -74,5 +46,3 @@ class Card {
     return this._card;
   }
 }
-
-export { initialCards, Card };
