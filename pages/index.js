@@ -1,13 +1,13 @@
-import Card from './Card.js';
-import { initialCards } from './constants.js';
-import { config, FormValidator } from './FormValidator.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import { initialCards, cardListSelector } from '../utils/constants.js';
+import { config, FormValidator } from '../components/FormValidator.js';
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
 const buttonAddPlace = document.querySelector('.profile__add-button');
-const sectionCards = document.querySelector('.cards');
 
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close-button');
@@ -32,12 +32,19 @@ const validatorAddPlace = new FormValidator(config, formAddPlace);
 validatorEditProfile.enableValidation();
 validatorAddPlace.enableValidation();
 
-initialCards.forEach(cardData => renderCard(cardData));
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, '.card-template', openFullScreenPopup);
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    }
+  },
+  cardListSelector
+);
 
-function renderCard(cardData) {
-  const card = new Card(cardData, '.card-template', openFullScreenPopup);
-  sectionCards.prepend(card.generateCard());
-}
+cardList.renderItems();
 
 function openPopup(popupType) {
   popupType.classList.add('popup_opened');

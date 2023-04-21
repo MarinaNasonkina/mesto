@@ -24,3 +24,5 @@ export const initialCards = [
     link: './images/cards/baltiyskay-kosa.jpg',
   },
 ];
+
+export const cardListSelector = '.cards';
