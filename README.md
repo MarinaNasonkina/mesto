@@ -21,6 +21,7 @@
 
 ## Технологии
 
+* **Webpack**
 * **JavaScript**
 * **HTML5**
 * **CSS3**

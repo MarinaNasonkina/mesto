@@ -5,7 +5,7 @@ import {
   selectorCardLike,
   classLikeActive,
   selectorCardRemove,
-} from "../utils/constants.js";
+} from '../utils/constants.js';
 
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
