@@ -1,3 +1,12 @@
+import {
+  selectorCard,
+  selectorCardImage,
+  selectorCardTitle,
+  selectorCardLike,
+  classLikeActive,
+  selectorCardRemove,
+} from "../utils/constants.js";
+
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._link = data.link;
@@ -9,18 +18,18 @@ export default class Card {
   _getTemplate() {
     const card = document
       .querySelector(this._templateSelector)
-      .content.querySelector('.card')
+      .content.querySelector(selectorCard)
       .cloneNode(true);
 
     return card;
   }
 
   _likeCard(evt) {
-    evt.target.classList.toggle('card__like-button_active');
+    evt.target.classList.toggle(classLikeActive);
   }
 
   _removeCard(evt) {
-    evt.target.closest('.card').remove();
+    evt.target.closest(selectorCard).remove();
   }
 
   _setEventListeners() {
@@ -34,10 +43,10 @@ export default class Card {
   generateCard() {
     this._card = this._getTemplate();
 
-    this._cardImage = this._card.querySelector('.card__image');
-    this._cardTitle = this._card.querySelector('.card__title');
-    this._buttonLikeCard = this._card.querySelector('.card__like-button');
-    this._buttonRemoveCard = this._card.querySelector('.card__remove-button');
+    this._cardImage = this._card.querySelector(selectorCardImage);
+    this._cardTitle = this._card.querySelector(selectorCardTitle);
+    this._buttonLikeCard = this._card.querySelector(selectorCardLike);
+    this._buttonRemoveCard = this._card.querySelector(selectorCardRemove);
 
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;

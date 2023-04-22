@@ -1,11 +1,4 @@
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__field',
-  submitButtonSelector: '.popup__submit-button',
-  inputErrorClass: 'popup__field_invalid',
-};
-
-class FormValidator {
+export default class FormValidator {
   constructor(config, formType) {
     this._formSelector = config.formSelector;
     this._inputSelector = config.inputSelector;
@@ -73,5 +66,3 @@ class FormValidator {
     this._setEventListeners();
   }
 }
-
-export { config, FormValidator };

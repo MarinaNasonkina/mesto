@@ -1,7 +1,9 @@
+import { selectorPopupClose } from '../utils/constants.js';
+
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._buttonClosePopup = this._popup.querySelector('.popup__close-button');
+    this._buttonClosePopup = this._popup.querySelector(selectorPopupClose);
   }
 
   _handleEscClose(evt) {
