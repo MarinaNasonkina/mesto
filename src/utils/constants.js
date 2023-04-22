@@ -1,27 +1,34 @@
+const imgRybachy = new URL('../images/cards/rybachy.jpg', import.meta.url);
+const imgTeriberka = new URL('../images/cards/teriberka.jpg', import.meta.url);
+const imgHalaktyrsky = new URL('../images/cards/halaktyrsky.jpg', import.meta.url);
+const imgKamchatsky = new URL('../images/cards/petropavlovsk-kamchatsky.jpg', import.meta.url);
+const imgKurshskay = new URL('../images/cards/kurshskay-kosa.jpg', import.meta.url);
+const imgBaltiyskay = new URL('../images/cards/baltiyskay-kosa.jpg', import.meta.url);
+
 export const initialCards = [
   {
     name: 'Рыбачий',
-    link: './images/cards/rybachy.jpg',
+    link: imgRybachy,
   },
   {
     name: 'Териберка',
-    link: './images/cards/teriberka.jpg',
+    link: imgTeriberka,
   },
   {
     name: 'Халактырский пляж',
-    link: './images/cards/halaktyrsky.jpg',
+    link: imgHalaktyrsky,
   },
   {
     name: 'Петропавловск-Камчатский',
-    link: './images/cards/petropavlovsk-kamchatsky.jpg',
+    link: imgKamchatsky,
   },
   {
     name: 'Куршская коса',
-    link: './images/cards/kurshskay-kosa.jpg',
+    link: imgKurshskay,
   },
   {
     name: 'Балтийская коса',
-    link: './images/cards/baltiyskay-kosa.jpg',
+    link: imgBaltiyskay,
   },
 ];
 
