@@ -26,3 +26,7 @@ export const initialCards = [
 ];
 
 export const cardListSelector = '.cards';
+export const formEditProfile = document.querySelector('.popup__form_type_edit-profile');
+export const formAddPlace = document.querySelector('.popup__form_type_add-place');
+export const buttonEditProfile = document.querySelector('.profile__edit-button');
+export const buttonAddPlace = document.querySelector('.profile__add-button');

@@ -1,36 +1,39 @@
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
-import { initialCards, cardListSelector } from '../utils/constants.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 import { config, FormValidator } from '../components/FormValidator.js';
+import { initialCards, cardListSelector, buttonEditProfile, buttonAddPlace, formEditProfile, formAddPlace } from '../utils/constants.js';
 
-const buttonEditProfile = document.querySelector('.profile__edit-button');
+// Старые константы - убрать после UserInfo
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
-
-const buttonAddPlace = document.querySelector('.profile__add-button');
-
-const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close-button');
-const formEditProfile = document.querySelector('.popup__form_type_edit-profile');
 const inputName = document.querySelector('.popup__field_type_name');
 const inputAbout = document.querySelector('.popup__field_type_about');
 
-const popupAddPlace = document.querySelector('.popup_type_add-place');
-const buttonCloseAddPlace = popupAddPlace.querySelector('.popup__close-button');
-const formAddPlace = document.querySelector('.popup__form_type_add-place');
-const inputPlaceName = document.querySelector('.popup__field_type_place-name');
-const inputPlaceImg = document.querySelector('.popup__field_type_place-img');
-
-const popupFullScreen = document.querySelector('.popup_type_full-screen-place');
-const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__close-button');
-const popupImage = document.querySelector('.popup__image');
-const popupSubtitle = document.querySelector('.popup__subtitle');
-
+// Валидаторы форм и их включение
 const validatorEditProfile = new FormValidator(config, formEditProfile);
-const validatorAddPlace = new FormValidator(config, formAddPlace);
-
 validatorEditProfile.enableValidation();
+
+const validatorAddPlace = new FormValidator(config, formAddPlace);
 validatorAddPlace.enableValidation();
+
+
+// Попапы и карточки
+const popupFullScreen = new PopupWithImage('.popup_type_full-screen-place');
+popupFullScreen.setEventListeners();
+
+const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
+  handleSubmitForm: (formData) => {
+    // тут будет UserInfo - прописать
+    popupEditProfile.close();
+  }
+});
+popupEditProfile.setEventListeners();
+
+const openFullScreenPopup = (link, name) => {
+  popupFullScreen.open(link, name);
+}
 
 const cardList = new Section(
   {
@@ -46,73 +49,40 @@ const cardList = new Section(
 
 cardList.renderItems();
 
-function openPopup(popupType) {
-  popupType.classList.add('popup_opened');
-  popupType.addEventListener('mousedown', closeByOverlay);
-  document.addEventListener('keydown', closeByEsc);
+const createNewCard = (data) => {
+  const card = new Card(data, '.card-template', openFullScreenPopup);
+  return card.generateCard();
 }
 
-function closePopup(popupType) {
-  popupType.classList.remove('popup_opened');
-  popupType.removeEventListener('mousedown', closeByOverlay);
-  document.removeEventListener('keydown', closeByEsc);
-}
+const popupAddPlace = new PopupWithForm('.popup_type_add-place', {
+  handleSubmitForm: (formData) => {
+    cardList.addItem(createNewCard(formData));
+    popupAddPlace.close();
+  }
+});
+popupAddPlace.setEventListeners();
 
-function openEditProfilePopup() {
-  inputName.value = profileName.textContent;
-  inputAbout.value = profileAbout.textContent;
-  validatorEditProfile.resetForm();
-  openPopup(popupEditProfile);
-}
 
-function submitEditForm(evt) {
-  evt.preventDefault();
+// Переделать в UserInfo
+function submitEditForm() {
   profileName.textContent = inputName.value;
   profileAbout.textContent = inputAbout.value;
-  closePopup(popupEditProfile);
 }
 
-function openAddPlacePopup() {
-  formAddPlace.reset();
+// Кнопки открытия попапов и их функции
+function openEditProfilePopup() {
+  // Переделать по UserInfo
+  inputName.value = profileName.textContent;
+  inputAbout.value = profileAbout.textContent;
+
+  validatorEditProfile.resetForm();
+  popupEditProfile.open();
+}
+
+const openAddPlacePopup = () => {
   validatorAddPlace.resetForm();
-  openPopup(popupAddPlace);
-}
-
-function submitAddPlaceForm(evt) {
-  evt.preventDefault();
-  renderCard({
-    name: inputPlaceName.value,
-    link: inputPlaceImg.value,
-  });
-  closePopup(popupAddPlace);
-}
-
-function openFullScreenPopup(evt) {
-  popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.alt;
-  popupSubtitle.textContent = evt.target.alt;
-  openPopup(popupFullScreen);
-}
-
-function closeByOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.currentTarget);
-  }
-}
-
-function closeByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
+  popupAddPlace.open();
 }
 
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
 buttonAddPlace.addEventListener('click', openAddPlacePopup);
-
-buttonCloseEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
-buttonCloseAddPlace.addEventListener('click', () => closePopup(popupAddPlace));
-buttonCloseFullScreen.addEventListener('click', () => closePopup(popupFullScreen));
-
-formEditProfile.addEventListener('submit', submitEditForm);
-formAddPlace.addEventListener('submit', submitAddPlaceForm);
