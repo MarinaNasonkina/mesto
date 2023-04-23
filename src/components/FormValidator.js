@@ -1,26 +1,25 @@
 export default class FormValidator {
-  constructor(config, formType) {
-    this._formSelector = config.formSelector;
-    this._inputSelector = config.inputSelector;
-    this._submitButtonSelector = config.submitButtonSelector;
-    this._inputErrorClass = config.inputErrorClass;
+  constructor(config, form) {
+    this._selectorInput = config.selectorInput;
+    this._selectorSubmitButton = config.selectorSubmitButton;
+    this._classInputError = config.classInputError;
 
-    this._form = formType;
+    this._form = form;
     this._fieldsList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
+      this._form.querySelectorAll(this._selectorInput)
     );
-    this._buttonSubmit = this._form.querySelector(this._submitButtonSelector);
+    this._buttonSubmit = this._form.querySelector(this._selectorSubmitButton);
   }
 
   _showFieldError(field) {
     const formError = this._form.querySelector(`.${field.id}-error`);
-    field.classList.add(this._inputErrorClass);
+    field.classList.add(this._classInputError);
     formError.textContent = field.validationMessage;
   }
 
   _hideFieldError(field) {
     const formError = this._form.querySelector(`.${field.id}-error`);
-    field.classList.remove(this._inputErrorClass);
+    field.classList.remove(this._classInputError);
     formError.textContent = '';
   }
 
@@ -56,9 +55,7 @@ export default class FormValidator {
   }
 
   resetForm() {
-    this._fieldsList.forEach(field => {
-      this._hideFieldError(field);
-    });
+    this._fieldsList.forEach(this._hideFieldError.bind(this));
     this._toggleButtonState();
   }
 

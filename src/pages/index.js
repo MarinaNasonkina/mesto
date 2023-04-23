@@ -8,11 +8,12 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import {
   initialCards,
-  config,
+  configValidator,
+  configCard,
+  configPopup,
   selectorProfileName,
   selectorProfileAbout,
   selectorCardSection,
-  selectorCardTemplate,
   selectorPopupEditProfile,
   selectorPopupAddPlace,
   selectorPopupFullScreen,
@@ -24,41 +25,38 @@ import {
   formAddPlace,
 } from '../utils/constants.js';
 
-const validatorEditProfile = new FormValidator(config, formEditProfile);
+const validatorEditProfile = new FormValidator(configValidator, formEditProfile);
 validatorEditProfile.enableValidation();
 
-const validatorAddPlace = new FormValidator(config, formAddPlace);
+const validatorAddPlace = new FormValidator(configValidator, formAddPlace);
 validatorAddPlace.enableValidation();
 
-const popupFullScreen = new PopupWithImage(selectorPopupFullScreen);
+const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
 popupFullScreen.setEventListeners();
 
 const openFullScreenPopup = (link, name) => {
   popupFullScreen.open(link, name);
 };
 
+const createNewCard = (data) => {
+  const card = new Card(data, configCard, openFullScreenPopup);
+  return card.generateCard();
+};
+
 const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, selectorCardTemplate, openFullScreenPopup);
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
+      cardList.addItem(createNewCard(item));
     },
   },
   selectorCardSection
 );
 cardList.renderItems();
 
-const createNewCard = (data) => {
-  const card = new Card(data, selectorCardTemplate, openFullScreenPopup);
-  return card.generateCard();
-};
-
-const popupAddPlace = new PopupWithForm(selectorPopupAddPlace, {
+const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
   handleSubmitForm: (formData) => {
     cardList.addItem(createNewCard(formData));
-    popupAddPlace.close();
   },
 });
 popupAddPlace.setEventListeners();
@@ -68,10 +66,9 @@ const userInfo = new UserInfo({
   selectorProfileAbout,
 });
 
-const popupEditProfile = new PopupWithForm(selectorPopupEditProfile, {
+const popupEditProfile = new PopupWithForm(configPopup, selectorPopupEditProfile, {
   handleSubmitForm: (formData) => {
     userInfo.setUserInfo(formData);
-    popupEditProfile.close();
   },
 });
 popupEditProfile.setEventListeners();

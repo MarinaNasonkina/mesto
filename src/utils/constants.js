@@ -32,31 +32,38 @@ export const initialCards = [
   },
 ];
 
-export const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__field',
-  submitButtonSelector: '.popup__submit-button',
-  inputErrorClass: 'popup__field_invalid',
+export const configValidator = {
+  selectorSubmitButton: '.popup__submit-button',
+  selectorInput: '.popup__field',
+  classInputError: 'popup__field_invalid',
+};
+
+export const configCard = {
+  selectorCardTemplate: '.card-template',
+  selectorCard: '.card',
+  selectorCardImage: '.card__image',
+  selectorCardTitle: '.card__title',
+  selectorCardRemove: '.card__remove-button',
+  selectorCardLike: '.card__like-button',
+  classLikeActive: 'card__like-button_active',
+};
+
+export const configPopup = {
+  selectorPopupClose: '.popup__close-button',
+  selectorForm: '.popup__form',
+  selectorInput: '.popup__field',
+  selectorPopupImage: '.popup__image',
+  selectorPopupSubtitle: '.popup__subtitle',
 };
 
 export const selectorProfileName = '.profile__name';
 export const selectorProfileAbout = '.profile__about';
 
 export const selectorCardSection = '.cards';
-export const selectorCardTemplate = '.card-template';
-export const selectorCard = '.card';
-export const selectorCardImage = '.card__image';
-export const selectorCardTitle = '.card__title';
-export const selectorCardLike = '.card__like-button';
-export const classLikeActive = 'card__like-button_active';
-export const selectorCardRemove = '.card__remove-button';
 
 export const selectorPopupEditProfile = '.popup_type_edit-profile';
 export const selectorPopupAddPlace = '.popup_type_add-place';
 export const selectorPopupFullScreen = '.popup_type_full-screen-place';
-export const selectorPopupClose = '.popup__close-button';
-export const selectorPopupImage = '.popup__image';
-export const selectorPopupSubtitle = '.popup__subtitle';
 
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
 export const buttonAddPlace = document.querySelector('.profile__add-button');
