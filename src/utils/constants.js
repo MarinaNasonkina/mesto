@@ -1,37 +1,3 @@
-const imgRybachy = new URL('../images/cards/rybachy.jpg', import.meta.url);
-const imgTeriberka = new URL('../images/cards/teriberka.jpg', import.meta.url);
-const imgHalaktyrsky = new URL('../images/cards/halaktyrsky.jpg', import.meta.url);
-const imgKamchatsky = new URL('../images/cards/petropavlovsk-kamchatsky.jpg', import.meta.url);
-const imgKurshskay = new URL('../images/cards/kurshskay-kosa.jpg', import.meta.url);
-const imgBaltiyskay = new URL('../images/cards/baltiyskay-kosa.jpg', import.meta.url);
-
-export const initialCards = [
-  {
-    name: 'Рыбачий',
-    link: imgRybachy,
-  },
-  {
-    name: 'Териберка',
-    link: imgTeriberka,
-  },
-  {
-    name: 'Халактырский пляж',
-    link: imgHalaktyrsky,
-  },
-  {
-    name: 'Петропавловск-Камчатский',
-    link: imgKamchatsky,
-  },
-  {
-    name: 'Куршская коса',
-    link: imgKurshskay,
-  },
-  {
-    name: 'Балтийская коса',
-    link: imgBaltiyskay,
-  },
-];
-
 export const configValidator = {
   selectorSubmitButton: '.popup__submit-button',
   selectorInput: '.popup__field',
@@ -58,6 +24,7 @@ export const configPopup = {
 
 export const selectorProfileName = '.profile__name';
 export const selectorProfileAbout = '.profile__about';
+export const selectorProfileAvatar = '.profile__avatar';
 
 export const selectorCardSection = '.cards';
 

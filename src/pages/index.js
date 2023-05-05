@@ -6,13 +6,14 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
+import Api from '../components/Api.js';
 import {
-  initialCards,
   configValidator,
   configCard,
   configPopup,
   selectorProfileName,
   selectorProfileAbout,
+  selectorProfileAvatar,
   selectorCardSection,
   selectorPopupEditProfile,
   selectorPopupAddPlace,
@@ -25,6 +26,49 @@ import {
   formAddPlace,
 } from '../utils/constants.js';
 
+const userInfo = new UserInfo({
+  selectorProfileName,
+  selectorProfileAbout,
+  selectorProfileAvatar,
+});
+
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      cardList.addItem(createNewCard(item));
+    },
+  },
+  selectorCardSection
+);
+
+const createNewCard = (data) => {
+  const card = new Card(data, configCard, openFullScreenPopup);
+  return card.generateCard();
+};
+
+const openFullScreenPopup = (link, name) => {
+  popupFullScreen.open(link, name);
+};
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
+  headers: {
+    authorization: '24c557eb-6f2d-4866-81ae-3b508d0fb910',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getUserInfo()
+.then(result => {
+  userInfo.setUserInfo(result);
+  userInfo.setUserAvatar(result);
+});
+
+api.getInitialCards()
+.then(result => {
+  cardList.renderItems(result);
+});
+
 const validatorEditProfile = new FormValidator(configValidator, formEditProfile);
 validatorEditProfile.enableValidation();
 
@@ -34,37 +78,12 @@ validatorAddPlace.enableValidation();
 const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
 popupFullScreen.setEventListeners();
 
-const openFullScreenPopup = (link, name) => {
-  popupFullScreen.open(link, name);
-};
-
-const createNewCard = (data) => {
-  const card = new Card(data, configCard, openFullScreenPopup);
-  return card.generateCard();
-};
-
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      cardList.addItem(createNewCard(item));
-    },
-  },
-  selectorCardSection
-);
-cardList.renderItems();
-
 const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
   handleSubmitForm: (formData) => {
     cardList.addItem(createNewCard(formData));
   },
 });
 popupAddPlace.setEventListeners();
-
-const userInfo = new UserInfo({
-  selectorProfileName,
-  selectorProfileAbout,
-});
 
 const popupEditProfile = new PopupWithForm(configPopup, selectorPopupEditProfile, {
   handleSubmitForm: (formData) => {
