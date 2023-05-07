@@ -20,6 +20,7 @@ export const configPopup = {
   selectorInput: '.popup__field',
   selectorPopupImage: '.popup__image',
   selectorPopupSubtitle: '.popup__subtitle',
+  selectorPopupSubmit: '.popup__submit-button',
 };
 
 export const selectorProfileName = '.profile__name';

@@ -85,11 +85,22 @@ const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
 });
 popupAddPlace.setEventListeners();
 
-const popupEditProfile = new PopupWithForm(configPopup, selectorPopupEditProfile, {
-  handleSubmitForm: (formData) => {
-    userInfo.setUserInfo(formData);
-  },
-});
+const popupEditProfile = new PopupWithForm(
+  configPopup,
+  selectorPopupEditProfile,
+  {
+    handleSubmitForm: (formData) => {
+      api
+        .editUserInfo(formData)
+        .then((result) => {
+          userInfo.setUserInfo(result);
+        })
+        .finally(() => {
+          popupEditProfile.renderLoading(false);
+        });
+    },
+  }
+);
 popupEditProfile.setEventListeners();
 
 const openEditProfilePopup = () => {
