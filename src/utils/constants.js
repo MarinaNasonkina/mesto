@@ -33,6 +33,7 @@ export const selectorPopupEditAvatar = '.popup_type_edit-avatar';
 export const selectorPopupEditProfile = '.popup_type_edit-profile';
 export const selectorPopupAddPlace = '.popup_type_add-place';
 export const selectorPopupFullScreen = '.popup_type_full-screen-place';
+export const selectorPopupConfirmation = '.popup_type_confirmation';
 
 export const buttonEditAvatar = document.querySelector('.profile__avatar-button');
 export const buttonEditProfile = document.querySelector('.profile__edit-button');

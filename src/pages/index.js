@@ -19,6 +19,7 @@ import {
   selectorPopupEditProfile,
   selectorPopupAddPlace,
   selectorPopupFullScreen,
+  selectorPopupConfirmation,
   buttonEditAvatar,
   buttonEditProfile,
   buttonAddPlace,
@@ -28,6 +29,9 @@ import {
   inputAbout,
   formAddPlace,
 } from '../utils/constants.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
+
+let userId;
 
 const userInfo = new UserInfo({
   selectorProfileName,
@@ -44,15 +48,6 @@ const cardList = new Section(
   selectorCardSection
 );
 
-const createNewCard = (data) => {
-  const card = new Card(data, configCard, openFullScreenPopup);
-  return card.generateCard();
-};
-
-const openFullScreenPopup = (link, name) => {
-  popupFullScreen.open(link, name);
-};
-
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
   headers: {
@@ -61,10 +56,37 @@ const api = new Api({
   }
 });
 
+const popupConfirmation = new PopupWithConfirmation(configPopup, selectorPopupConfirmation, {
+  handleSubmitForm: (card, cardId) => {
+    api.deleteCard(cardId)
+      .then(() => {
+        card.remove();
+        popupConfirmation.close();
+      });
+  }
+});
+popupConfirmation.setEventListeners();
+
+const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
+popupFullScreen.setEventListeners();
+
+const createNewCard = (data) => {
+  const card = new Card(data, userId, configCard, {
+    handleCardClick: (link, name) => {
+      popupFullScreen.open(link, name);
+    },
+    handleRemoveClick: (card, cardId) => {
+      popupConfirmation.open(card, cardId);
+    },
+  });
+  return card.generateCard();
+};
+
 api.getUserInfo()
 .then(result => {
   userInfo.setUserInfo(result);
   userInfo.setUserAvatar(result);
+  userId = result._id;
 });
 
 api.getInitialCards()
@@ -81,12 +103,16 @@ validatorAddPlace.enableValidation();
 const validatorEditAvatar = new FormValidator(configValidator, formEditAvatar);
 validatorEditAvatar.enableValidation();
 
-const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
-popupFullScreen.setEventListeners();
-
 const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
   handleSubmitForm: (formData) => {
-    cardList.addItem(createNewCard(formData));
+    api
+      .addNewCard(formData)
+      .then((result) => {
+        cardList.addItem(createNewCard(result));
+      })
+      .finally(() => {
+        popupAddPlace.renderLoading(false);
+      });
   },
 });
 popupAddPlace.setEventListeners();

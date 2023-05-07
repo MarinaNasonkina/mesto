@@ -146,6 +146,24 @@
         </form>
       </div>
     </section>
+    <section class="popup popup_type_confirmation">
+      <div class="popup__container popup__container_for_form">
+        <button
+          class="popup__close-button"
+          aria-label="Закрыть."
+          type="button"
+        ></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form
+          method="delete"
+          name="deletePlace"
+          class="popup__form popup__form_type_delete-place"
+          novalidate
+        >
+          <button type="submit" class="popup__submit-button">Да</button>
+        </form>
+      </div>
+    </section>
     <section
       class="popup popup_type_full-screen-place"
       aria-label="Место на весь экран."

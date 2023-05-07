@@ -85,6 +85,47 @@ export default class Api {
         alert(err);
       });
   }
+
+  addNewCard(data) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(
+          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
+        );
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject(
+          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}.`
+          );
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 }
 
 // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
