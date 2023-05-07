@@ -18,6 +18,11 @@
             alt="Аватар профиля."
             class="profile__avatar"
           >
+          <button
+            class="profile__avatar-button"
+            aria-label="Сменить аватар."
+            type="button"
+          ></button>
           <div class="profile__description">
             <h1 class="profile__name"></h1>
             <button
@@ -39,6 +44,33 @@
     <footer class="footer">
       <p class="footer__text">© 2023 Mesto Russia</p>
     </footer>
+    <section class="popup popup_type_edit-avatar">
+      <div class="popup__container popup__container_for_form">
+        <button
+          class="popup__close-button"
+          aria-label="Закрыть и отменить изменения."
+          type="button"
+        ></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form
+          method="patch"
+          name="editAvatar"
+          class="popup__form popup__form_type_edit-avatar"
+          novalidate
+        >
+          <input
+            class="popup__field popup__field_type_avatar"
+            placeholder="Ссылка на картинку"
+            name="avatar"
+            id="profile-avatar-input"
+            type="url"
+            required
+          >
+          <span class="profile-avatar-input-error popup__input-error"></span>
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
     <section class="popup popup_type_edit-profile">
       <div class="popup__container popup__container_for_form">
         <button
@@ -48,7 +80,7 @@
         ></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form
-          method="post"
+          method="patch"
           name="editProfile"
           class="popup__form popup__form_type_edit-profile"
           novalidate

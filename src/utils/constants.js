@@ -29,12 +29,16 @@ export const selectorProfileAvatar = '.profile__avatar';
 
 export const selectorCardSection = '.cards';
 
+export const selectorPopupEditAvatar = '.popup_type_edit-avatar';
 export const selectorPopupEditProfile = '.popup_type_edit-profile';
 export const selectorPopupAddPlace = '.popup_type_add-place';
 export const selectorPopupFullScreen = '.popup_type_full-screen-place';
 
+export const buttonEditAvatar = document.querySelector('.profile__avatar-button');
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
 export const buttonAddPlace = document.querySelector('.profile__add-button');
+
+export const formEditAvatar = document.querySelector('.popup__form_type_edit-avatar');
 
 export const formEditProfile = document.querySelector('.popup__form_type_edit-profile');
 export const inputName = document.querySelector('.popup__field_type_name');

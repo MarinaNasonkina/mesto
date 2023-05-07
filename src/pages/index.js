@@ -15,11 +15,14 @@ import {
   selectorProfileAbout,
   selectorProfileAvatar,
   selectorCardSection,
+  selectorPopupEditAvatar,
   selectorPopupEditProfile,
   selectorPopupAddPlace,
   selectorPopupFullScreen,
+  buttonEditAvatar,
   buttonEditProfile,
   buttonAddPlace,
+  formEditAvatar,
   formEditProfile,
   inputName,
   inputAbout,
@@ -75,6 +78,9 @@ validatorEditProfile.enableValidation();
 const validatorAddPlace = new FormValidator(configValidator, formAddPlace);
 validatorAddPlace.enableValidation();
 
+const validatorEditAvatar = new FormValidator(configValidator, formEditAvatar);
+validatorEditAvatar.enableValidation();
+
 const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
 popupFullScreen.setEventListeners();
 
@@ -84,6 +90,24 @@ const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
   },
 });
 popupAddPlace.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm(
+  configPopup,
+  selectorPopupEditAvatar,
+  {
+    handleSubmitForm: (formData) => {
+      api
+        .editAvatar(formData)
+        .then((result) => {
+          userInfo.setUserAvatar(result);
+        })
+        .finally(() => {
+          popupEditAvatar.renderLoading(false);
+        });
+    },
+  }
+);
+popupEditAvatar.setEventListeners();
 
 const popupEditProfile = new PopupWithForm(
   configPopup,
@@ -103,6 +127,11 @@ const popupEditProfile = new PopupWithForm(
 );
 popupEditProfile.setEventListeners();
 
+const openEditProfileAvatar = () => {
+  validatorEditAvatar.resetForm();
+  popupEditAvatar.open();
+};
+
 const openEditProfilePopup = () => {
   const user = userInfo.getUserInfo();
 
@@ -118,5 +147,6 @@ const openAddPlacePopup = () => {
   popupAddPlace.open();
 };
 
+buttonEditAvatar.addEventListener('click', openEditProfileAvatar);
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
 buttonAddPlace.addEventListener('click', openAddPlacePopup);

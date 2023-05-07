@@ -43,6 +43,27 @@ export default class Api {
       });
   }
 
+  editAvatar(data) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(
+          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
+        );
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   editUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
