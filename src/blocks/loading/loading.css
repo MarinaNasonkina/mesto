@@ -1,8 +1,16 @@
 @keyframes loading {
-  from { content: '...'; }
-  33% { content: '.'; }
-  66% { content: '..'; }
-  to { content: '...'; }
+  from {
+    content: '...';
+  }
+  33% {
+    content: '.';
+  }
+  66% {
+    content: '..';
+  }
+  to {
+    content: '...';
+  }
 }
 
 .loading::after {

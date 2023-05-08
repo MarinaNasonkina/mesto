@@ -84,7 +84,7 @@
 
 @import url('../blocks/popup/__form/popup__form.css');
 
-@import url('../blocks/popup/__form/_type/_delete-place/popup__form_type_delete-place.css');
+@import url('../blocks/popup/__form/_type/_confirm/popup__form_type_confirm.css');
 
 @import url('../blocks/popup/__title/popup__title.css');
 

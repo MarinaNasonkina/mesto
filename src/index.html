@@ -24,7 +24,7 @@
             type="button"
           ></button>
           <div class="profile__description">
-            <h1 class="profile__name"></h1>
+            <h1 class="profile__name">...</h1>
             <button
               class="profile__edit-button"
               aria-label="Редактировать профиль."
@@ -53,7 +53,7 @@
         ></button>
         <h2 class="popup__title">Обновить аватар</h2>
         <form
-          method="patch"
+          method="post"
           name="editAvatar"
           class="popup__form popup__form_type_edit-avatar"
           novalidate
@@ -80,7 +80,7 @@
         ></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form
-          method="patch"
+          method="post"
           name="editProfile"
           class="popup__form popup__form_type_edit-profile"
           novalidate
@@ -155,9 +155,9 @@
         ></button>
         <h2 class="popup__title">Вы уверены?</h2>
         <form
-          method="delete"
+          method="post"
           name="deletePlace"
-          class="popup__form popup__form_type_delete-place"
+          class="popup__form popup__form_type_confirm"
           novalidate
         >
           <button type="submit" class="popup__submit-button">Да</button>
@@ -187,9 +187,9 @@
           <h2 class="card__title"></h2>
           <div class="card__likes">
             <button
-            class="card__like-button"
-            aria-label="Мне нравится."
-            type="button"
+              class="card__like-button"
+              aria-label="Мне нравится."
+              type="button"
             ></button>
             <p class="card__like-counter"></p>
           </div>

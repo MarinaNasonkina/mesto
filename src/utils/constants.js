@@ -24,9 +24,11 @@ export const configPopup = {
   selectorPopupSubmit: '.popup__submit-button',
 };
 
-export const selectorProfileName = '.profile__name';
-export const selectorProfileAbout = '.profile__about';
-export const selectorProfileAvatar = '.profile__avatar';
+export const configUserInfo = {
+  selectorProfileName: '.profile__name',
+  selectorProfileAbout: '.profile__about',
+  selectorProfileAvatar: '.profile__avatar',
+}
 
 export const selectorCardSection = '.cards';
 
