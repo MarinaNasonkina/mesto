@@ -78,6 +78,19 @@ const createNewCard = (data) => {
     handleRemoveClick: (card, cardId) => {
       popupConfirmation.open(card, cardId);
     },
+    handleLikeClick: (cardIsLiked, cardId) => {
+      if (cardIsLiked) {
+        api.deleteLike(cardId)
+          .then(result => {
+            card.setCounter(result.likes);
+          });
+      } else {
+        api.putLike(cardId)
+          .then(result => {
+            card.setCounter(result.likes);
+          });
+      }
+    },
   });
   return card.generateCard();
 };

@@ -11,6 +11,7 @@ export const configCard = {
   selectorCardTitle: '.card__title',
   selectorCardRemove: '.card__remove-button',
   selectorCardLike: '.card__like-button',
+  selectorCounter: '.card__like-counter',
   classLikeActive: 'card__like-button_active',
 };
 

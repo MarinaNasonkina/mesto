@@ -126,6 +126,46 @@ export default class Api {
         alert(err);
       });
   }
+
+  putLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(
+          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
+        );
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
+  deleteLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(
+          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
+        );
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 }
 
 // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
