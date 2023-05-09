@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(config.selectorForm);
     this._fieldsList = this._form.querySelectorAll(config.selectorInput);
     this._buttonSubmit = this._form.querySelector(config.selectorPopupSubmit);
+    this._textButtonSubmit = this._buttonSubmit.textContent;
   }
 
   _getInputValues() {
@@ -22,11 +23,10 @@ export default class PopupWithForm extends Popup {
   renderLoading(isLoading) {
     if (isLoading) {
       this._buttonSubmit.textContent = 'Сохранение';
-      // класс loading - анимация многоточия
       this._buttonSubmit.classList.add('loading');
     } else {
       this._buttonSubmit.classList.remove('loading');
-      this._form.classList.contains('.popup_type_add-place')
+      this._textButtonSubmit === 'Создать'
         ? (this._buttonSubmit.textContent = 'Создать')
         : (this._buttonSubmit.textContent = 'Сохранить');
       this.close();

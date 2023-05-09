@@ -5,23 +5,19 @@ export default class Api {
     this._token = this._headers.authorization;
   }
 
+  _getResponseData(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Что-то пошло не так! Ошибка: ${res.status}`);
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._token,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   getInitialCards() {
@@ -29,18 +25,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   editAvatar(data) {
@@ -50,18 +35,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: data.avatar,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   editUserInfo(data) {
@@ -72,18 +46,7 @@ export default class Api {
         name: data.name,
         about: data.about,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   addNewCard(data) {
@@ -94,18 +57,7 @@ export default class Api {
         name: data.name,
         link: data.link,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   deleteCard(cardId) {
@@ -114,17 +66,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}.`
-          );
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   putLike(cardId) {
@@ -133,18 +75,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 
   deleteLike(cardId) {
@@ -153,17 +84,6 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(
-          `Что-то пошло не так! Ошибка: ${res.status} ${res.statusText}`
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then(this._getResponseData);
   }
 }

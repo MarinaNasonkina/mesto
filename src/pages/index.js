@@ -41,15 +41,19 @@ const api = new Api({
   },
 });
 
-api.getUserInfo().then((result) => {
-  userInfo.setUserInfo(result);
-  userInfo.setUserAvatar(result);
-  userId = result._id;
-});
-
-api.getInitialCards().then((result) => {
-  cardList.renderItems(result);
-});
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then(([info, initialCards]) => {
+    userId = info._id;
+    userInfo.setUserInfo(info);
+    userInfo.setUserAvatar(info);
+    cardList.renderItems(initialCards);
+  })
+  .catch((err) => {
+    alert(err);
+  });
 
 const cardList = new Section(
   {
@@ -66,19 +70,31 @@ function createNewCard(data) {
       popupFullScreen.open(link, name);
     },
 
-    handleRemoveClick: (card, cardId) => {
+    handleRemoveClick: (cardId) => {
       popupConfirmation.open(card, cardId);
     },
 
     handleLikeClick: (cardIsLiked, cardId) => {
       if (cardIsLiked) {
-        api.deleteLike(cardId).then((result) => {
-          card.setCounter(result.likes);
-        });
+        api
+          .deleteLike(cardId)
+          .then((result) => {
+            card.setCounter(result.likes);
+            card.toggleLikeButton();
+          })
+          .catch((err) => {
+            alert(err);
+          });
       } else {
-        api.putLike(cardId).then((result) => {
-          card.setCounter(result.likes);
-        });
+        api
+          .putLike(cardId)
+          .then((result) => {
+            card.setCounter(result.likes);
+            card.toggleLikeButton();
+          })
+          .catch((err) => {
+            alert(err);
+          });
       }
     },
   });
@@ -86,7 +102,10 @@ function createNewCard(data) {
   return card.generateCard();
 }
 
-const popupFullScreen = new PopupWithImage(configPopup, selectorPopupFullScreen);
+const popupFullScreen = new PopupWithImage(
+  configPopup,
+  selectorPopupFullScreen
+);
 
 const popupConfirmation = new PopupWithConfirmation(
   configPopup,
@@ -96,8 +115,11 @@ const popupConfirmation = new PopupWithConfirmation(
       api
         .deleteCard(cardId)
         .then(() => {
-          card.remove();
+          card.removeCard();
           popupConfirmation.close();
+        })
+        .catch((err) => {
+          alert(err);
         });
     },
   }
@@ -112,6 +134,9 @@ const popupEditAvatar = new PopupWithForm(
         .editAvatar(formData)
         .then((result) => {
           userInfo.setUserAvatar(result);
+        })
+        .catch((err) => {
+          alert(err);
         })
         .finally(() => {
           popupEditAvatar.renderLoading(false);
@@ -130,6 +155,9 @@ const popupEditProfile = new PopupWithForm(
         .then((result) => {
           userInfo.setUserInfo(result);
         })
+        .catch((err) => {
+          alert(err);
+        })
         .finally(() => {
           popupEditProfile.renderLoading(false);
         });
@@ -137,22 +165,21 @@ const popupEditProfile = new PopupWithForm(
   }
 );
 
-const popupAddPlace = new PopupWithForm(
-  configPopup,
-  selectorPopupAddPlace,
-  {
-    handleSubmitForm: (formData) => {
-      api
-        .addNewCard(formData)
-        .then((result) => {
-          cardList.addItem(createNewCard(result));
-        })
-        .finally(() => {
-          popupAddPlace.renderLoading(false);
-        });
-    },
-  }
-);
+const popupAddPlace = new PopupWithForm(configPopup, selectorPopupAddPlace, {
+  handleSubmitForm: (formData) => {
+    api
+      .addNewCard(formData)
+      .then((result) => {
+        cardList.addItem(createNewCard(result));
+      })
+      .catch((err) => {
+        alert(err);
+      })
+      .finally(() => {
+        popupAddPlace.renderLoading(false);
+      });
+  },
+});
 
 const validatorEditProfile = new FormValidator(configValidator, formEditProfile);
 
@@ -163,7 +190,7 @@ const validatorEditAvatar = new FormValidator(configValidator, formEditAvatar);
 function openEditProfileAvatar() {
   validatorEditAvatar.resetForm();
   popupEditAvatar.open();
-};
+}
 
 function openEditProfilePopup() {
   const user = userInfo.getUserInfo();
@@ -173,12 +200,12 @@ function openEditProfilePopup() {
 
   validatorEditProfile.resetForm();
   popupEditProfile.open();
-};
+}
 
 function openAddPlacePopup() {
   validatorAddPlace.resetForm();
   popupAddPlace.open();
-};
+}
 
 popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners();
