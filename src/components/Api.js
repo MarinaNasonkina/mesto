@@ -6,13 +6,12 @@ export default class Api {
   }
 
   _getResponseData(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Что-то пошло не так! Ошибка: ${res.status}`);
+    return res.ok
+      ? res.json()
+      : Promise.reject(`Что-то пошло не так! Ошибка: ${res.status}`);
   }
 
-  getUserInfo() {
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._token,
@@ -38,7 +37,7 @@ export default class Api {
     }).then(this._getResponseData);
   }
 
-  editUserInfo(data) {
+  editUserData(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,

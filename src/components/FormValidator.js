@@ -24,25 +24,19 @@ export default class FormValidator {
   }
 
   _checkFieldValidity(field) {
-    if (field.validity.valid) {
-      this._hideFieldError(field);
-    } else {
-      this._showFieldError(field);
-    }
+    field.validity.valid
+      ? this._hideFieldError(field)
+      : this._showFieldError(field);
   }
 
   _hasInvalidField() {
-    return this._fieldsList.some(field => {
-      return !field.validity.valid;
-    });
+    return this._fieldsList.some(field => !field.validity.valid);
   }
 
   _toggleButtonState() {
-    if (this._hasInvalidField()) {
-      this._buttonSubmit.setAttribute('disabled', '');
-    } else {
-      this._buttonSubmit.removeAttribute('disabled');
-    }
+    this._hasInvalidField()
+      ? this._buttonSubmit.setAttribute('disabled', '')
+      : this._buttonSubmit.removeAttribute('disabled');
   }
 
   _setEventListeners() {

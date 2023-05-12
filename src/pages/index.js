@@ -42,13 +42,13 @@ const api = new Api({
 });
 
 Promise.all([
-  api.getUserInfo(),
+  api.getUserData(),
   api.getInitialCards()
 ])
-  .then(([info, initialCards]) => {
-    userId = info._id;
-    userInfo.setUserInfo(info);
-    userInfo.setUserAvatar(info);
+  .then(([userData, initialCards]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
     cardList.renderItems(initialCards);
   })
   .catch((err) => {
@@ -152,7 +152,7 @@ const popupEditProfile = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
       api
-        .editUserInfo(formData)
+        .editUserData(formData)
         .then((result) => {
           userInfo.setUserInfo(result);
           popupEditProfile.close();
